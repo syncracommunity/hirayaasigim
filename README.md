@@ -1,2 +1,0 @@
-# hirayaasigim
-Hiram'a özel
