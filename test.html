@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hira'm ❤️ Sana Özel</title>
+  <style>
+    :root {
+      --primary: #ff4b72;
+      --secondary: #ff85a1;
+      --card-bg: rgba(255, 255, 255, 0.12);
+      --card-border: rgba(255, 255, 255, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #2c001e 0%, #0a0512 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      overflow-x: hidden;
+      position: relative;
+      color: #fff;
+    }
+
+    .heart {
+      position: absolute;
+      color: var(--primary);
+      animation: floatUp 5s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0 0 6px var(--primary));
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) scale(0.4) rotate(0deg);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 35px 25px;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 75, 114, 0.2);
+      position: relative;
+      z-index: 10;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #fff;
+      text-shadow: 0 0 12px var(--primary);
+      margin-bottom: 12px;
+    }
+
+    p.subtitle {
+      font-size: 1.05rem;
+      color: #e0e0e0;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      position: relative;
+      min-height: 60px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .btn-yes {
+      background: linear-gradient(45deg, #ff4b72, #ff85a1);
+      color: white;
+      box-shadow: 0 8px 20px rgba(255, 75, 114, 0.4);
+    }
+
+    .btn-yes:active {
+      transform: scale(0.95);
+    }
+
+    .btn-no {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      position: absolute;
+      transition: all 0.2s ease;
+    }
+
+    .slider-container {
+      margin: 25px 0;
+    }
+
+    .range-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 10px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .love-percent {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 15px 0;
+      text-shadow: 0 0 10px rgba(255, 133, 161, 0.5);
+    }
+
+    .letter-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 18px;
+      padding: 22px;
+      text-align: left;
+      line-height: 1.7;
+      color: #f1f1f1;
+      border-left: 4px solid var(--primary);
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bg-audio" loop preload="auto">
+    <source src="nafile.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="hearts-container"></div>
+
+  <div class="glass-card">
+    
+    <div class="step active" id="step1">
+      <h1>Hira'm ❤️</h1>
+      <p class="subtitle">Sana ufacık bir sorum var...<br>Beni seviyor musun?</p>
+      
+      <div class="btn-group">
+        <button class="btn btn-yes" onclick="nextStep(2)">Evet 😍</button>
+        <button class="btn btn-no" id="noBtn" onmouseover="dodgeButton()" onclick="dodgeButton()" ontouchstart="dodgeButton()">Hayır 😜</button>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <h1>Peki Ne Kadar? 💕</h1>
+      <p class="subtitle">Beni ne kadar sevdiğini göster bakalım:</p>
+      
+      <div class="slider-container">
+        <input type="range" min="1" max="1000" value="500" class="range-slider" id="loveSlider" oninput="updateLoveVal(this.value)">
+        <div class="love-percent" id="loveVal">%500</div>
+      </div>
+
+      <button class="btn btn-yes" onclick="nextStep(3)" style="width: 100%;">Devam Et ✨</button>
+    </div>
+
+    <div class="step" id="step3">
+      <h1>İyi Ki Varsın ❤️</h1>
+      
+      <div class="letter-box">
+        <p>Aramıza giren tüm engellere nafile... Kalbimin en özel köşesinde her zaman sen varsın.</p>
+        <p style="margin-top: 10px;">Gülüşünle dünyamı aydınlattığın ve bana hissettirdiğin her güzel duygu için çok teşekkür ederim.</p>
+        <p style="margin-top: 12px; font-weight: bold; text-align: right; color: var(--secondary);">Seni Çok Seviyorum ✨</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const audio = document.getElementById('bg-audio');
+    let musicStarted = false;
+
+    function playAudio() {
+      if (!musicStarted) {
+        audio.currentTime = 36;
+        audio.play().then(() => {
+          musicStarted = true;
+        }).catch(err => {
+          console.log("Müzik oynatma engellendi:", err);
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      audio.currentTime = 37;
+      audio.play().then(() => {
+        musicStarted = true;
+      }).catch(() => {});
+    });
+
+    window.addEventListener('click', playAudio, { once: true });
+    window.addEventListener('touchstart', playAudio, { once: true });
+
+    function dodgeButton() {
+      playAudio();
+      const btn = document.getElementById('noBtn');
+      const card = document.querySelector('.glass-card');
+      
+      const cardRect = card.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+
+      const maxX = cardRect.width - btnRect.width - 40;
+      const maxY = cardRect.height - btnRect.height - 40;
+
+      const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+      const randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+      btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    }
+
+    function nextStep(stepNum) {
+      playAudio();
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + stepNum).classList.add('active');
+    }
+
+    function updateLoveVal(val) {
+      const loveValText = document.getElementById('loveVal');
+      if (val >= 1000) {
+        loveValText.innerText = "%SONSUZ ❤️";
+      } else {
+        loveValText.innerText = "%" + val;
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+      heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+      
+      document.getElementById('hearts-container').appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+</body>
+</html>
